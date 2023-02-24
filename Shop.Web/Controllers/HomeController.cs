@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,17 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
+        IProducts db;
+        public HomeController()
+        {
+            db = new InMemoryData();
+        }
+
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            var model = db.GetAll();
+            return View(model);
         }
     }
 }
