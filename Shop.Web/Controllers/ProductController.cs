@@ -10,10 +10,10 @@ namespace Shop.Web.Controllers
 {
     public class ProductController : Controller
     {
-        IProducts db;
+        IProductRepository db;
         public ProductController()
         {
-           db = new InMemoryData();
+           db = new ProductRepository();
         }
         // GET: Product
         
@@ -30,5 +30,18 @@ namespace Shop.Web.Controllers
 
             return View(model);
         }
+        public ActionResult Search( string search)
+        {
+            var model = db.Search(search);
+
+            return View(model);
+        }
+
+        //[HttpPost]
+        //public ActionResult Search(string search)
+        //{
+        //    var model = db.Search(search);
+        //    return View(model);
+        //}
     }
 }

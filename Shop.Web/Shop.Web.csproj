@@ -173,10 +173,10 @@
     <Content Include="Views\Shared\FooterView.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_ProductViewLayout.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Shared\ProductHeaderView.cshtml" />
     <Content Include="Views\Shared\ProductFooterView.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

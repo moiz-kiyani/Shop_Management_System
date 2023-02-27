@@ -1,17 +1,18 @@
 ﻿using Shop.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop.Data.Services
 {
-    public class InMemoryData : IProducts
+    public class ProductRepository : IProductRepository
     {
         List<Products> products;
 
-        public InMemoryData()
+        public ProductRepository()
         {
             products = new List<Products>()
             { 
@@ -33,6 +34,12 @@ namespace Shop.Data.Services
         public IEnumerable<Products> GetAll()
         {
             return products;
+        }
+
+        public IEnumerable<Products> Search(string search)
+        {
+            return products.Where(x=>x.Name.ToLower().Contains(search.ToLower())).ToList();
+            
         }
     }
 

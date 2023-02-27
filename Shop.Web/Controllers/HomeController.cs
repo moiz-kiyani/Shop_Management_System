@@ -9,10 +9,10 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        IProducts db;
+        IProductRepository db;
         public HomeController()
         {
-            db = new InMemoryData();
+            db = new ProductRepository();
         }
 
         // GET: Home

@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Services
 {
-    public interface IProducts
+    public interface IProductRepository
     {
         IEnumerable<Products> GetAll();
 
         Products Get(int id);
+
+        IEnumerable<Products> Search(string search);
     }
 }
