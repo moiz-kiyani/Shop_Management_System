@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Services
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        IEnumerable<Product> Search(string search);
-        IEnumerable<Product> GetForCategory(int id);
+        IEnumerable<Category> GetForCategory(int id);
     }
 }

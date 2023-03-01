@@ -30,7 +30,7 @@ namespace Shop.Web.Controllers
 
             return View(model);
         }
-        public ActionResult Search( string search)
+        public ActionResult Search(string search)
         {
             var model = db.Search(search);
 

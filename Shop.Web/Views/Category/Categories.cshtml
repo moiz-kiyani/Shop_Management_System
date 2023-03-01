@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Shop.Data.Models.Category>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+
+    <!-- For demo purpose -->
+    <div class="row text-center text-white mb-5">
+        <div class="col-lg-7 mx-auto" style="color:black">
+            <h1 class="display-4">Categories of Products</h1>
+            <p class="lead mb-0">To Make Shopping Easy</p>
+        </div>
+    </div>
+    <!-- End -->
+    @foreach (var cat in Model)
+    {
+        <div class="row">
+
+            <div class="col-lg-8 mx-auto"><a class="nav-link active" aria-current="page" href="~/Category/CategoryProducts/@cat.CategoryId"/>
+
+                <!-- List group-->
+                <ul class="list-group shadow">
+
+                    <!-- list group item-->
+                    <li class="list-group-item">
+                        <!-- Custom content-->
+
+                        <div class="media align-items-lg-center flex-column flex-lg-row p-3" >
+    <div class="media-body order-2 order-lg-1">
+        <h5 class="mt-0 font-weight-bold mb-2">@cat.CategoryName</h5>
+        <p class="font-italic text-muted mb-0 small">@cat.CategoryDescription</p> <br />
+    </div><img src="~/Images/@cat.CategoryImageUrl" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+</div>
+
+                        <!-- End -->
+                    </li>
+                    <!-- End -->
+                </ul>
+                <!-- End -->
+
+            </div>
+
+        </div>
+    }
+</div>
+

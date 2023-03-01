@@ -9,17 +9,19 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        IProductRepository db;
+        
+        IProductRepository productRepo;
         public HomeController()
         {
-            db = new ProductRepository();
+            productRepo = new ProductRepository();
         }
 
         // GET: Home
         public ActionResult Index()
         {
-            var model = db.GetAll();
+            var model = productRepo.GetAll();
             return View(model);
         }
+
     }
 }
