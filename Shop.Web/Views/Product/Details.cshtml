@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_ProductViewLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="py-5">
@@ -19,8 +19,9 @@
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem">
                     <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        Add to cart
+                        <i class="bi-cart-fill me-1">
+                            <a class="btn mt-auto" href="@Url.Action("AddToCart", "Cart", new { Model.Id })">Add To Cart</a>
+                        </i>
                     </button>
                 </div>
             </div>

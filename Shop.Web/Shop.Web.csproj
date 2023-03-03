@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -137,6 +138,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-reboot.rtl.css" />
     <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\Bootstrap-StyleSheet-Cart.css" />
     <Content Include="Content\bootstrap-utilities.css" />
     <Content Include="Content\bootstrap-utilities.min.css" />
     <Content Include="Content\bootstrap-utilities.rtl.css" />
@@ -150,16 +152,25 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\1.jpg" />
-    <Content Include="Images\2.jpg" />
-    <Content Include="Images\3.jpg" />
-    <Content Include="Images\4.jpg" />
-    <Content Include="Images\5.jpg" />
-    <Content Include="Images\c1.jpg" />
-    <Content Include="Images\c2.jpg" />
-    <Content Include="Images\c3.jpg" />
-    <Content Include="Images\c4.jpg" />
-    <Content Include="Images\c5.jpg" />
+    <Content Include="Images\BatAndBall.jpg" />
+    <Content Include="Images\Belt.jpg" />
+    <Content Include="Images\Burger.jpg" />
+    <Content Include="Images\CoffeeBeater.jpg" />
+    <Content Include="Images\Cycle.jpg" />
+    <Content Include="Images\Bed.jpg" />
+    <Content Include="Images\Bottle.jpg" />
+    <Content Include="Images\Cloth.jpg" />
+    <Content Include="Images\FoodCate.jpg" />
+    <Content Include="Images\FootBall.jpg" />
+    <Content Include="Images\Shoes.jpg" />
+    <Content Include="Images\SideLamp.jpg" />
+    <Content Include="Images\SportsCate.jpg" />
+    <Content Include="Images\HomeCate.jpg" />
+    <Content Include="Images\KitchenCate.jpg" />
+    <Content Include="Images\ClothingCate.jpg" />
+    <Content Include="Images\fries.jpg" />
+    <Content Include="Images\pasta.jpg" />
+    <Content Include="Images\pizza.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -215,13 +226,12 @@
     <Content Include="Views\Shared\HeaderView.cshtml" />
     <Content Include="Views\Shared\FooterView.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_ProductViewLayout.cshtml" />
-    <Content Include="Views\Shared\ProductHeaderView.cshtml" />
-    <Content Include="Views\Shared\ProductFooterView.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\Category\Categories.cshtml" />
     <Content Include="Views\Category\CategoryProducts.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Services
 {
-    public interface ICategoryRepository : IRepository<Category>
+    internal interface ICustomerRepository : IRepository<Product>
     {
+        IEnumerable<Product> SendToCart(int id);
     }
 }

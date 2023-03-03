@@ -14,11 +14,11 @@ namespace Shop.Data.Services
         {
             categories = new List<Category>()
             {
-                new Category {CategoryId=1, CategoryName="Food", CategoryDescription="urger is used to describe a.", CategoryImageUrl="c1.jpg"},
-                new Category {CategoryId=2, CategoryName="Sports", CategoryDescription="bicycle, also called bike, ", CategoryImageUrl="c2.jpg"},
-                new Category {CategoryId=3, CategoryName="Home", CategoryDescription="a large, rectangular piece of furniture, ", CategoryImageUrl="c3.jpg"},
-                new Category {CategoryId=4, CategoryName="Kitchen", CategoryDescription="a glass or plastic container with a narrow neck, ", CategoryImageUrl="c4.jpg"},
-                new Category {CategoryId=5, CategoryName="Clothing", CategoryDescription="CLOTH is a pliable material made usually by weaving, ", CategoryImageUrl="c5.jpg"}
+                new Category {CategoryId=1, CategoryName="Food", CategoryDescription="A food group is a collection of foods that share similar nutritional properties or biological classifications.", CategoryImageUrl="FoodCate.jpg"},
+                new Category {CategoryId=2, CategoryName="Sports", CategoryDescription="Sport is generally recognised as system of activities based in physical athleticism or physical dexterity.", CategoryImageUrl="SportsCate.jpg"},
+                new Category {CategoryId=3, CategoryName="Home", CategoryDescription="Household goods are products that we buy and use within our homes.", CategoryImageUrl="HomeCate.jpg"},
+                new Category {CategoryId=4, CategoryName="Kitchen", CategoryDescription="The kitchen is a core environment in a house and its essentially functional aim joins aesthetics.", CategoryImageUrl="KitchenCate.jpg"},
+                new Category {CategoryId=5, CategoryName="Clothing", CategoryDescription="Clothing is any item worn on the body.", CategoryImageUrl="ClothingCate.jpg"}
             };
 
         }
@@ -31,11 +31,6 @@ namespace Shop.Data.Services
         public IEnumerable<Category> GetAll()
         {
             return categories;
-        }
-
-        public IEnumerable<Category> GetForCategory(int categoryId)
-        {
-            return Items.Where(x => x.CategoryId == categoryId).ToList<Category>();
         }
     }
 }
