@@ -1,4 +1,5 @@
-﻿using Shop.Data.Services;
+﻿using Shop.Data.Models;
+using Shop.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,12 @@ namespace Shop.Web.Controllers
                 productRepo = new ProductRepository();
             }
 
+        List<Product> li = new List<Product>();
+
         // GET: Cart
         public ActionResult Index()
         {
+            int x = 0;
             int count = 0;
             var products = Session["Products"] as List<int>;
             if (products != null)
@@ -25,9 +29,16 @@ namespace Shop.Web.Controllers
                 count = products.Count;
             }
 
+            var models = productRepo.GetAll().Where(p => products.Contains(p.Id)).ToList();
+            foreach(var item in models)
+            {
+                x += item.Price;
+            }
+            
+            ViewBag.Total = x;
             ViewBag.Count = count;
 
-            return View();
+            return View(models);
         }
 
         public ActionResult Cart(int id)
@@ -36,9 +47,9 @@ namespace Shop.Web.Controllers
             return View(model);
         }
 
-        public ActionResult AddToCart(int id)
+        public ActionResult SendToCart(int id)
         {
-            // do some code
+            var model = productRepo.SendToCart(id);
             var products = Session["Products"] as List<int>;
             if (products == null)
             {

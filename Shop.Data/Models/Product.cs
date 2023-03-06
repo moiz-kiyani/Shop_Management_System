@@ -17,7 +17,8 @@ namespace Shop.Data.Models
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public int CategoryId { get; set; }
-
+        public int Quantity { get; set; }
+        public int TotalBill { get; set; }
         //This will return the instance of the category
         public virtual Category Category { get; set; }
 
