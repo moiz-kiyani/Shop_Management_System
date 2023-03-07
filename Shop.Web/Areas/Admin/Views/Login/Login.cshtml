@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!doctype html>
+<html>
+<head>
+
+    <!-- for-mobile-apps -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- //for-mobile-apps -->
+    <link href="//fonts.googleapis.com/css?family=Abril+Fatface&amp;subset=latin-ext" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700italic,700,400italic,300italic,300' rel='stylesheet' type='text/css'>
+    <!-- font-awesome icons -->
+    <link href="~/Content/login/css/font-awesome.css" rel="stylesheet">
+    <!-- //font-awesome icons -->
+    @*<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <script src="js/jquery-2.1.4.min.js"></script>*@
+    <link href="~/Content/login/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="~/Content/login/js/jquery-2.1.4.min.js"></script>
+    @if (ViewBag.Message != null)
+    {
+        <script>
+
+            $(document).ready(function () {
+
+                alert('@ViewBag.Message');
+
+            });
+
+        </script>
+
+    }
+</head>
+<body>
+    <div class="content" id="Main-Content">
+
+        <div class="w3ls-slider">
+            <div class="hub-slider">
+                <div class="hub-slider-slides">
+                    <ul>
+                        <li>
+                            <div class="login-form login-form-left">
+                                <div class="agile-row">
+                                    <h2>Sign In</h2>
+                                    <div class="login-agileits-top">
+                                        @using (Html.BeginForm("loginform", "login", FormMethod.Post))
+                                        {
+                                            <p>Email</p>
+                                            <input type="email" class="email" name="email" placeholder="Email" required="" />
+                                            <p>Password</p>
+                                            <input type="password" class="password" name="Password" placeholder="Password" required="" />
+                                            <input type="submit" value="Sign In">
+                                        }
+                                    </div>
+
+                                    <div class="login-agileits-bottom">
+                                        <h6><a href="#">Forgot password?</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <!-- copyright -->
+        <div class="copyright">
+            <p>© 2017  All rights reserved</p>
+        </div>
+        <!-- //copyright -->
+        <script type="text/javascript" src="js/hubslider.js"></script>
+    </div>
+</body>
+</html>
