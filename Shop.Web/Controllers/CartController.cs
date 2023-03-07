@@ -28,6 +28,10 @@ namespace Shop.Web.Controllers
             {
                 count = products.Count;
             }
+            else
+            {
+                return RedirectToAction("CartIsEmpty");
+            }
 
             var models = productRepo.GetAll().Where(p => products.Contains(p.Id)).ToList();
             foreach(var item in models)
@@ -41,10 +45,9 @@ namespace Shop.Web.Controllers
             return View(models);
         }
 
-        public ActionResult Cart(int id)
-        {
-            var model = productRepo.SendToCart(id); 
-            return View(model);
+        public ActionResult CartIsEmpty()
+        { 
+            return View();
         }
 
         public ActionResult SendToCart(int id)

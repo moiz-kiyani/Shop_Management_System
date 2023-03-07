@@ -231,7 +231,7 @@
     <Content Include="Views\Category\Categories.cshtml" />
     <Content Include="Views\Category\CategoryProducts.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Cart\Cart.cshtml" />
+    <Content Include="Views\Cart\CartIsEmpty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
