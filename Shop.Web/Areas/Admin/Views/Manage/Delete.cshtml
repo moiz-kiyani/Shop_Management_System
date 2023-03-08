@@ -1,7 +1,7 @@
 ﻿@model Shop.Web.Areas.Admin.Models.Product
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Delete";
     Layout = null;
 }
 
@@ -313,46 +313,22 @@
     </script>
 </head>
 <body>
-    @*<div class="modal fade">*@
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/Admin/Manage/Create" method="post" enctype="multipart/form-data">
+                <form  action="/Admin/Manage/Delete" method="post">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Products</h4>
+                        <h4 class="modal-title">Delete Product</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="location.href='@Url.Action("Show", "Manage")'">×</button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="ProId">Id</label>
-                            <input class="form-control" id="ProId" name="ProId" type="number" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ProductName">Name</label>
-                            <input type="text" class="form-control" id="ProductName" name="ProductName" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ProductPrice">Price</label>
-                            <input type="text" class="form-control" id="ProductPrice" name="ProductPrice" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ProductCategory">Category</label>
-                            <input type="text" class="form-control" id="ProductCategory" name="ProductCategory" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="Description">Description</label>
-                            <input type="text" class="form-control" id="Description" name="Description" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="File">File</label>
-                            <input type="file" class="form-control" id="File" name="File" value="" accept=".jpg,.jpeg,.png"/>
-                        </div>
+                        <p>Are you sure you want to delete these Records?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" value="Create">
+                        <input type="submit" class="btn btn-danger" value="Delete">
                     </div>
                 </form>
             </div>
         </div>
-    @*</div>*@
 </body>
 </html>

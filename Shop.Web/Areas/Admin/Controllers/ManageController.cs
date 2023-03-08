@@ -2,7 +2,9 @@
 using Shop.Web.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Category = Shop.Web.Areas.Admin.Models.Category;
@@ -18,11 +20,6 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(Category.products);
         }
 
-        // GET: Admin/Manage/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: Admin/Manage/Create
         public ActionResult Create()
@@ -34,7 +31,15 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(Product pro)
         {
+            string filename = Path.GetFileName(pro.File.FileName);
+            string path = Path.Combine(Server.MapPath("/Images/"), filename);
+            pro.Image = "~/Images/" + filename;
             Category.products.Add(pro);
+             
+            if(pro.File != null)
+            { 
+                pro.File.SaveAs(path);
+            }
             return RedirectToAction("Show");
         }
 
@@ -71,23 +76,29 @@ namespace Shop.Web.Areas.Admin.Controllers
             // GET: Admin/Manage/Delete/5
             public ActionResult Delete(int id)
         {
-            return View();
+            foreach (var product in Category.products)
+            {
+                if (product.ProId == id)
+                {
+                    return View(product);
+                }
+            }
+            return RedirectToAction(nameof(Show));
         }
 
         // POST: Admin/Manage/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Product pro)
         {
-            try
+            foreach (var product in Category.products)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Show");
+                if (product.ProId == product.ProId)
+                {
+                    Category.products.Remove(product);
+                    return RedirectToAction(nameof(Show));
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Show));
         }
     }
 }

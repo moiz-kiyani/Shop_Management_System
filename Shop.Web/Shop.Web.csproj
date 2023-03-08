@@ -153,13 +153,16 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\styles1.css" />
+    <Content Include="Content\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\BatAndBall.jpg" />
     <Content Include="Images\Belt.jpg" />
+    <Content Include="Images\bg-01.jpg" />
     <Content Include="Images\Burger.jpg" />
     <Content Include="Images\CoffeeBeater.jpg" />
     <Content Include="Images\Cycle.jpg" />
@@ -210,6 +213,7 @@
     <Content Include="Areas\Admin\Views\Manage\Show.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -220,6 +224,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
     <Content Include="Scripts\scripts1.js" />
@@ -247,6 +252,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Images\" />
     <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
