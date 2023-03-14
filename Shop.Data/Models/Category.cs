@@ -16,6 +16,6 @@ namespace Shop.Data.Models
         public string CategoryImageUrl { get; set; }
 
         //This will return the list of products
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
     }
 }

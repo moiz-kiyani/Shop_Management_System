@@ -10,5 +10,8 @@ namespace Shop.Data.Services
 {
     public interface ICategoryRepository : IRepository<Category>
     {
+        void Create(Category category); 
+        void Update(Category category);
+
     }
 }

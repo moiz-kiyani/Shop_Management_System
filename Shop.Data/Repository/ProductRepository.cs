@@ -28,7 +28,8 @@ namespace Shop.Data.Services
                  new Product {Id=11,CategoryId=4, Name="Coffee Beater", Description="Its simplistic design and simple operating system make it simple to produce cream-rich coffee quickly and easily.", Price=999, ImageUrl="CoffeeBeater.jpg"},
                 new Product {Id=12,CategoryId=5, Name="Cloth", Description="CLOTH is a pliable material made usually by weaving, felting, or knitting natural or synthetic fibers and filaments.", Price=6420, ImageUrl="Cloth.jpg"},
                  new Product {Id=13,CategoryId=5, Name="Shoes", Description="A shoe is an item of footwear intended to protect and comfort the human foot. They are often worn with a sock. Shoes are also used as an item of decoration and fashion. The design of shoes has varied enormously through time and from culture to culture, with form originally being tied to function.", Price=425000, ImageUrl="Shoes.jpg"},
-                  new Product {Id=14,CategoryId=5, Name="Belt", Description="A strip of leather or other material worn, typically round the waist, to support or hold in clothes or to carry weapons.", Price=1450, ImageUrl="Belt.jpg"}
+                  new Product {Id=14,CategoryId=5, Name="Belt", Description="A strip of leather or other material worn, typically round the waist, to support or hold in clothes or to carry weapons.", Price=1450, ImageUrl="Belt.jpg"},
+                   new Product {Id=15,CategoryId=2, Name="Ballon", Description="Ballon is round soft ball fill with air.", Price=20, ImageUrl="Ballon.jpg"}
 
             };
             

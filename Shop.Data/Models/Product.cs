@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Shop.Data.Models
 {
@@ -21,7 +22,8 @@ namespace Shop.Data.Models
         public int TotalBill { get; set; }
         //This will return the instance of the category
         public virtual Category Category { get; set; }
+        public HttpPostedFileBase File { get; set; }
 
-
+        static public List<Product> products { get; set; } = new List<Product>();
     }
 }

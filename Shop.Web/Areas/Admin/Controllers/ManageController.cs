@@ -2,6 +2,7 @@
 using Shop.Web.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -63,11 +64,31 @@ namespace Shop.Web.Areas.Admin.Controllers
         {
             foreach (var product in Category.products)
             {
-                if (product.ProId == pro.ProId)
+                if(pro.File!=null)
+                {
+                    string filename = Path.GetFileName(pro.File.FileName);
+                    string path = Path.Combine(Server.MapPath("/Images/"), filename);
+                    pro.Image = "~/Images/" + filename;
+
+                    string OldPath = Request.MapPath(Session["Image"].ToString());
+
+                    if (pro.File != null)
+                    {
+                        pro.File.SaveAs(path);
+                        if(System.IO.File.Exists(OldPath))
+                        {
+                            System.IO.File.Delete(OldPath);
+                        }
+                    }
+                    return RedirectToAction("Show");
+                }
+
+                else if (product.ProId == pro.ProId)
                 {
                     product.ProductName = pro.ProductName;
                     product.ProductPrice = pro.ProductPrice;
                     product.ProductCategory = pro.ProductCategory;
+                    product.Description = pro.Description;
                 }
             }
             return RedirectToAction(nameof(Show));
