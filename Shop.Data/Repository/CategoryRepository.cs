@@ -39,43 +39,52 @@ namespace Shop.Data.Services
             }
         }
 
-        public Category Get(Category category, int id)
+
+        public Category Get(int id)
         {
-            List<Category> categories = new List<Category>();
+            Category category = new Category();
 
             using (SqlConnection con = new SqlConnection(Connect))
             {
-                string ShowDetailsQuery = "selct * from products where ID =" + id + "";
+                string ShowDetailsQuery = "select * from Category where ID =" + id + "";
                 SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
                 // cmd.ExecuteNonQuery();
-
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-
                 con.Open();
-                sda.Fill(dt);
+                SqlDataReader sdr = cmd.ExecuteReader();
 
-                foreach (DataRow row in dt.Rows)
+                while(sdr.Read())
                 {
-                    categories.Add(new Category
-                    {
-                        CategoryId = Convert.ToInt32(row[0]),
-                        CategoryName = row[1].ToString(),
-                        CategoryDescription = row[2].ToString(),
-                        CategoryImageUrl = row[3].ToString(),
-                    });
+                    category.CategoryId = ToInt32(sdr[0], 0); //Convert.ToInt32(sdr[0]);
+                    category.CategoryName = sdr[1].ToString();
+                    category.CategoryDescription = sdr[2].ToString();   
+                    category.CategoryImageUrl = sdr[3].ToString();
                 }
+
                 return category;
             }
         }
 
-        public IEnumerable<Category> GetAll()
+        private int ToInt32(object value, int defaultValue) 
+        {
+            int result = defaultValue;
+            try
+            {
+                result = Convert.ToInt32(value);
+            }
+            catch
+            {
+            }
+
+            return result;
+        }
+
+        public IList<Category> GetAll()
         {
             List<Category> categories = new List<Category>();
 
             using (SqlConnection con = new SqlConnection(Connect))
             {
-                string ShowDetailsQuery = "select * from Products ";
+                string ShowDetailsQuery = "select * from category ";
                 SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
                 // cmd.ExecuteNonQuery();
 
@@ -87,7 +96,7 @@ namespace Shop.Data.Services
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    categories.Add(new Category
+                    categories.Add(new Category()
                     {
                         CategoryId = Convert.ToInt32(row[0]),
                         CategoryName = row[1].ToString(),
@@ -103,8 +112,20 @@ namespace Shop.Data.Services
         {
             using (SqlConnection con = new SqlConnection(Connect))
             {
-                string UpdateQurey = "update Products set ProductName = '" + category.CategoryName + "','" + category.CategoryDescription + "','" + category.CategoryImageUrl + "',  where ID =" + category.Id + "";
+                con.Open();
+                string UpdateQurey = "update Category set CategoryName = '" + category.CategoryName + "', CategoryDescription = '" + category.CategoryDescription + "', CategoryImageUrl = '" + category.CategoryImageUrl + "',  where ID =" + category.Id + "";
                 SqlCommand cmd = new SqlCommand(UpdateQurey, con);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (SqlConnection con = new SqlConnection(Connect))
+            {
+                string DeleteQurey = "delete from Category where ID =" + id + "";
+                var cmd = new SqlCommand(DeleteQurey, con);
+                con.Open();
                 cmd.ExecuteNonQuery();
             }
         }

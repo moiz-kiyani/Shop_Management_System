@@ -12,6 +12,6 @@ namespace Shop.Data.Services
     {
         void Create(Category category); 
         void Update(Category category);
-
+        void Delete(int id);
     }
 }
