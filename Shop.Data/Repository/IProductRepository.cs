@@ -13,5 +13,9 @@ namespace Shop.Data.Services
         IEnumerable<Product> Search(string search);
         IEnumerable<Product> GetForCategory(int id);
         IEnumerable<Product> SendToCart(int id);
+
+        void Create(Product product);
+        void Update(Product product);
+        void Delete(int id);
     }
 }

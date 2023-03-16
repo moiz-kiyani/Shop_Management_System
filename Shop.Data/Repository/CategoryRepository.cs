@@ -46,15 +46,15 @@ namespace Shop.Data.Services
 
             using (SqlConnection con = new SqlConnection(Connect))
             {
-                string ShowDetailsQuery = "select * from Category where ID =" + id + "";
-                SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
+                string ShowItemQuery = "select * from Category where ID =" + id + "";
+                SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
                 // cmd.ExecuteNonQuery();
                 con.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
 
                 while(sdr.Read())
                 {
-                    category.CategoryId = ToInt32(sdr[0], 0); //Convert.ToInt32(sdr[0]);
+                    category.CategoryId = Convert.ToInt32(sdr[0]);
                     category.CategoryName = sdr[1].ToString();
                     category.CategoryDescription = sdr[2].ToString();   
                     category.CategoryImageUrl = sdr[3].ToString();
@@ -64,21 +64,21 @@ namespace Shop.Data.Services
             }
         }
 
-        private int ToInt32(object value, int defaultValue) 
-        {
-            int result = defaultValue;
-            try
-            {
-                result = Convert.ToInt32(value);
-            }
-            catch
-            {
-            }
+        //private int ToInt32(object value, int defaultValue) 
+        //{
+        //    int result = defaultValue;
+        //    try
+        //    {
+        //        result = Convert.ToInt32(value);
+        //    }
+        //    catch
+        //    {
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        public IList<Category> GetAll()
+        public List<Category> GetAll()
         {
             List<Category> categories = new List<Category>();
 
