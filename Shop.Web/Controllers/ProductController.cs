@@ -10,11 +10,14 @@ namespace Shop.Web.Controllers
 {
     public class ProductController : Controller
     {
-        IProductRepository db;
-        public ProductController()
-        {
-           db = new ProductRepository();
-        }
+        private readonly ProductRepository db = new ProductRepository();
+
+
+        //IProductRepository db;
+        //public ProductController()
+        //{
+        //   db = new ProductRepository();
+        //}
         // GET: Product
         
         public ActionResult Index()

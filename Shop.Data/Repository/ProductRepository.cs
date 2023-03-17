@@ -43,7 +43,7 @@ namespace Shop.Data.Services
         {
             using(SqlConnection con = new SqlConnection(Connect))
             {
-                string InsertQurey = "insert into Products values('"+product.Name+"','"+product.Description+"','"+product.Price+"','"+product.ImageUrl+"','"+product.CategoryId+"','"+product.Quantity+"')";
+                string InsertQurey = "insert into Products values('"+product.Name+"', '"+product.Price+"', '"+product.Description+"', '"+product.Quantity+"', '"+product.ImageUrl+"' , '"+product.CategoryId+"')";
                 var cmd = new SqlCommand(InsertQurey, con);
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -61,11 +61,11 @@ namespace Shop.Data.Services
 
             using (SqlConnection con = new SqlConnection(Connect))
             {
-                string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
-                "FROM Products " +
-                "INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
+                //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
+                //"FROM Products " +
+                //"INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
 
-                //string ShowItemQuery = "select * from Products where ID =" + id + "";
+                string ShowItemQuery = "select * from Products where ID =" + id + "";
                 SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
                 // cmd.ExecuteNonQuery();
                 con.Open();
@@ -75,18 +75,19 @@ namespace Shop.Data.Services
                 {
                     product.ProductId= sdr.GetInt32(0);
                     product.Name = sdr.GetString(1);
-                    product.Description = sdr.GetString(2);
-                    product.ImageUrl = sdr.GetString(3);
-                    product.Price = (int)sdr.GetFloat(4);
-                    product.Quantity = sdr.GetInt32(5);
-                    product.CategoryId = sdr.GetInt32(7);
+                    product.Price = sdr.GetInt32(2);
+                    product.Description = sdr.GetString(3);
+                    product.Quantity = sdr.GetInt32(4);
+                    product.ImageUrl = sdr.GetString(5);
+                    product.CategoryId = sdr.GetInt32(6);
                 }
 
                 return product;
             }
         }
 
-        public IList<Product> GetAll()
+        public List<Product> GetAll()
+        
         {
             List<Product> product = new List<Product>();
 
@@ -104,21 +105,51 @@ namespace Shop.Data.Services
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    categories.Add(new Product()
+                    product.Add(new Product()
                     {
                         ProductId = Convert.ToInt32(row[0]),
                         Name = row[1].ToString(),
-                        Description = row[2].ToString(),
-                        ImageUrl = row[3].ToString(),
-                        Price = (int)Convert.ToDouble(row[4]),
-                        Quantity = Convert.ToInt32(row[5]),
-                        CategoryId = Convert.ToInt32(row[7]),
+                        Price = Convert.ToInt32(row[2]),
+                        Description = row[3].ToString(),
+                        Quantity = Convert.ToInt32(row[4]),
+                        ImageUrl = row[5].ToString(),
+                        CategoryId = Convert.ToInt32(row[6]),
 
                     });
                 }
             }
+                return product;
+            }
+
+        public List<Category> GetCategories()
+        {
+            List<Category> categories = new List<Category>();
+
+            using (SqlConnection con = new SqlConnection(Connect))
+            {
+                string ShowDetailsQuery = "select * from category ";
+                SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
+                // cmd.ExecuteNonQuery();
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+
+                con.Open();
+                sda.Fill(dt);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    categories.Add(new Category()
+                    {
+                        CategoryId = Convert.ToInt32(row[0]),
+                        CategoryName = row[1].ToString(),
+                        CategoryDescription = row[2].ToString(),
+                        CategoryImageUrl = row[3].ToString(),
+                    });
+                }
                 return categories;
             }
+        }
 
         public IEnumerable<Product> GetForCategory(int id)
         {
@@ -128,7 +159,8 @@ namespace Shop.Data.Services
             {
                 string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
                 "FROM Products " +
-                "INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
+                "INNER JOIN Category ON Products.CategoryID = Categories.ID " +
+                "where CategoryId = "+ id+"";
 
                 //string ShowItemQuery = "select * from Products where ID =" + id + "";
                 SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
@@ -142,7 +174,7 @@ namespace Shop.Data.Services
                     product.Name = sdr.GetString(1);
                     product.Description = sdr.GetString(2);
                     product.ImageUrl = sdr.GetString(3);
-                    product.Price = (int)sdr.GetFloat(4);
+                    product.Price = sdr.GetInt32(0);
                     product.Quantity = sdr.GetInt32(5);
                     product.CategoryId = sdr.GetInt32(7);
                 }

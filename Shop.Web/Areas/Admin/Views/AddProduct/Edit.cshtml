@@ -1,7 +1,6 @@
-﻿@model Shop.Web.Areas.Admin.Models.Product
+﻿@model Shop.Data.Models.Product
 
 @{
-    ViewBag.Title = "Create";
     Layout = null;
 }
 
@@ -313,46 +312,46 @@
     </script>
 </head>
 <body>
-    @*<div class="modal fade">*@
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="/Admin/Manage/Create" method="post" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Products</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="location.href='@Url.Action("Show", "Manage")'">×</button>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Edit", "AddProduct", FormMethod.Post, new { Model.Id }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Product</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="location.href='@Url.Action("Index", "AddProduct")'">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ProductName">Name</label>
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="ProId">Id</label>
-                            <input class="form-control" id="ProId" name="ProId" type="number" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ProductName">Name</label>
-                            <input type="text" class="form-control" id="ProductName" name="ProductName" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ProductPrice">Price</label>
-                            <input type="text" class="form-control" id="ProductPrice" name="ProductPrice" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ProductCategory">Category</label>
-                            <input type="text" class="form-control" id="ProductCategory" name="ProductCategory" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="Description">Description</label>
-                            <input type="text" class="form-control" id="Description" name="Description" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="File">File</label>
-                            <input type="file" class="form-control" id="File" name="File" value="" accept=".jpg,.jpeg,.png"/>
-                        </div>
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" value="Create">
+                    <div class="form-group">
+                        <label for="Price">Price</label>
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="Quantity">Quantity</label>
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group">
+                        <label for="CategoryId">Category</label>
+                        @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group">
+                        <label for="Image">Image</label><br />
+                        <img src="@Url.Content(Model.ImageUrl)" width="80" height="50" /> <br /><br />
+                        <input type="file" class="form-control" id="File" name="File" value="" accept=".jpg,.jpeg,.png" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Save">
+                </div>
+            }
         </div>
-    @*</div>*@
+    </div>
 </body>
 </html>

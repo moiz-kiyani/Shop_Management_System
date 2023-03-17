@@ -10,6 +10,7 @@ namespace Shop.Web.Controllers
     public class CategoryController : Controller
     {
         private readonly CategoryRepository db = new CategoryRepository();
+        
 
         IProductRepository productRepo;
         ICategoryRepository categoryRepo;

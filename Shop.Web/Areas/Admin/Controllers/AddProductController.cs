@@ -13,7 +13,6 @@ namespace Shop.Web.Areas.Admin.Controllers
     public class AddProductController : Controller
     {
         private readonly ProductRepository db = new ProductRepository();
-        private readonly CategoryRepository categoryRepository = new CategoryRepository();
 
         // GET: Admin/AddProduct
         public ActionResult Index()
@@ -22,7 +21,9 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
         public ActionResult Create()
         {
-            return View();
+            Product product = new Product();
+            product.categories = db.GetCategories();
+            return View(product);
         }
 
         [HttpPost]
@@ -33,19 +34,17 @@ namespace Shop.Web.Areas.Admin.Controllers
             //dropDownList.DataSource = categories;
            // dropDownList.DataTextField = categories.
             //dropDownList.DataValueField = 
+
             string filename = Path.GetFileName(product.File.FileName);
             string Extension = Path.GetExtension(product.File.FileName);
             string path = Path.Combine(Server.MapPath("~/Images/"), filename);
             product.ImageUrl = "~/Images/" + filename;
             db.Create(product);
-            {
                 if (product.File != null)
                 {
                     product.File.SaveAs(path);
                 }
                 return RedirectToAction("Index");
-            }
-            return View(product);
         }
 
         public ActionResult Edit(int id)

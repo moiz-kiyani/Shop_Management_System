@@ -27,6 +27,6 @@ namespace Shop.Data.Models
        // public virtual Category Category { get; set; }
         public HttpPostedFileBase File { get; set; }
 
-        static public List<Product> products { get; set; } = new List<Product>();
+        public List<Category> categories { get; set; } 
     }
 }

@@ -17,5 +17,7 @@ namespace Shop.Data.Services
         void Create(Product product);
         void Update(Product product);
         void Delete(int id);
+
+        List<Category> GetCategories();
     }
 }

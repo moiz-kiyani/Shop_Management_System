@@ -21,7 +21,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             string Password = collection.Get("Password");
             if (email == "moiz@gmail.com" && Password == "abc123")
             {
-                return RedirectToAction("Show", "Manage");
+                return RedirectToAction("Index", "AddProduct");
             }
             else
             {
