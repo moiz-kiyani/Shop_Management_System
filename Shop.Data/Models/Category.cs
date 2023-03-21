@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace Shop.Data.Models
         //Product table ID
         public int Id { get; set; }
         public int CategoryId { get; set; }
+
+        [Required(ErrorMessage ="Category Name Must be Spacified")]
         public string CategoryName { get; set; }
         public string CategoryDescription { get; set; }
         public string CategoryImageUrl { get; set; }

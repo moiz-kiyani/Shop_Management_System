@@ -337,14 +337,15 @@
                     </thead>
 
 
-                    @foreach (var item in Model)
-                    {
-                        <tbody>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <!--   -->
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CategoryName)
-                                </td>
+                               <td>
+                                   <a class="nav-link active" aria-current="page" href="~/Admin/AddCategory/GoToProducts/@item.CategoryId" />
+                                   @Html.DisplayFor(modelItem => item.CategoryName)
+                               </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CategoryDescription)
                                 </td>
@@ -353,18 +354,15 @@
                                 </td>
                                 <td>
                                     <a @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId })
-                                    <a @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+                                    <a @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId },
+                                       new { onclick = "return confirm('Are you sure you wish to delete this article?');" })
                                 </td>
                             </tr>
-
-                        </tbody>
-                    }
-
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
-</body>
-</html>
 </body>
 </html>

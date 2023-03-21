@@ -86,6 +86,44 @@ namespace Shop.Data.Services
             }
         }
 
+        public IEnumerable<Product> GetForProduct(int id)
+        {
+            List<Product> product = new List<Product>();
+
+            using (SqlConnection con = new SqlConnection(Connect))
+            {
+                //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
+                //"FROM Products " +
+                //"INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
+
+                string ShowItemQuery = "select * from Products where CategoryID =" + id + "";
+                SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
+                // cmd.ExecuteNonQuery();
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+
+                con.Open();
+                sda.Fill(dt);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    product.Add(new Product()
+                    {
+                        ProductId = Convert.ToInt32(row[0]),
+                        Name = row[1].ToString(),
+                        Price = Convert.ToInt32(row[2]),
+                        Description = row[3].ToString(),
+                        Quantity = Convert.ToInt32(row[4]),
+                        ImageUrl = row[5].ToString(),
+                        CategoryId = Convert.ToInt32(row[6]),
+
+                    });
+                }
+            }
+            return product;
+        }
+        
+
         public List<Product> GetAll()
         
         {
@@ -153,33 +191,38 @@ namespace Shop.Data.Services
 
         public IEnumerable<Product> GetForCategory(int id)
         {
-            Product product = new Product();
+            List<Product> product = new List<Product>();
 
             using (SqlConnection con = new SqlConnection(Connect))
             {
-                string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
-                "FROM Products " +
-                "INNER JOIN Category ON Products.CategoryID = Categories.ID " +
-                "where CategoryId = "+ id+"";
+                //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description, Products.ImageUrl " +
+                //                        "FROM Products " +
+                //                        "JOIN Category ON Products.CategoryID = Categories.ID " +
+                //                        "WHERE Products.CategoryId = " + id;
 
-                //string ShowItemQuery = "select * from Products where ID =" + id + "";
+                string ShowItemQuery = "select * from Products where CategoryID =" + id + "";
                 SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
-                // cmd.ExecuteNonQuery();
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+
                 con.Open();
-                SqlDataReader sdr = cmd.ExecuteReader();
+                sda.Fill(dt);
 
-                while (sdr.Read())
+                foreach (DataRow row in dt.Rows)
                 {
-                    product.ProductId = sdr.GetInt32(0);
-                    product.Name = sdr.GetString(1);
-                    product.Description = sdr.GetString(2);
-                    product.ImageUrl = sdr.GetString(3);
-                    product.Price = sdr.GetInt32(0);
-                    product.Quantity = sdr.GetInt32(5);
-                    product.CategoryId = sdr.GetInt32(7);
-                }
+                    product.Add(new Product()
+                    {
+                        ProductId = Convert.ToInt32(row[0]),
+                        Name = row[2].ToString(),
+                        Description = row[3].ToString(),
+                        ImageUrl = row[4].ToString(),
+                        Price = Convert.ToInt32(row[5]),
+                        Quantity = Convert.ToInt32(row[6]),
+                        CategoryId = Convert.ToInt32(row[7])
+                    });
+            }
 
-                return (IEnumerable<Product>)product;
+                return product;
             }
         }
 

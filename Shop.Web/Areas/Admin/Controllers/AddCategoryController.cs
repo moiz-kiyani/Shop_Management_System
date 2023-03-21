@@ -12,12 +12,19 @@ namespace Shop.Web.Areas.Admin.Controllers
     public class AddCategoryController : Controller
     {
         private readonly CategoryRepository db = new CategoryRepository();
+        private readonly ProductRepository pdb = new ProductRepository();
 
         // GET: Admin/Category
         public ActionResult Index()
         {
             return View(db.GetAll());
         }
+
+        public ActionResult GoToProducts(int id)
+        {
+            return RedirectToAction("ShowProduct","AddProduct", new { id = id });
+        }
+
         public ActionResult Create()
         {
             return View();
@@ -89,12 +96,6 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(category);
         }
 
-        public ActionResult Delete()
-        {
-            return View();
-        }
-
-        [HttpPost]
         public ActionResult Delete(int id)
         {
             var category = db.Get(id);
@@ -105,10 +106,9 @@ namespace Shop.Web.Areas.Admin.Controllers
             else
             {
                 db.Delete(id);
-                }
+            }
             return RedirectToAction("Index");
         }
+
     }
-
-
 }

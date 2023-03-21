@@ -10,6 +10,7 @@ namespace Shop.Web.Controllers
     public class CategoryController : Controller
     {
         private readonly CategoryRepository db = new CategoryRepository();
+        private readonly ProductRepository productRepository = new ProductRepository();
         
 
         IProductRepository productRepo;
@@ -28,7 +29,7 @@ namespace Shop.Web.Controllers
 
         public ActionResult CategoryProducts(int id)
         {
-            var model = productRepo.GetForCategory(id);
+            var model = productRepository.GetForCategory(id);
             return View(model);
         }
     }

@@ -19,6 +19,12 @@ namespace Shop.Web.Areas.Admin.Controllers
         {
             return View(db.GetAll());
         }
+
+        public ActionResult ShowProduct(int id)
+        {
+            return View(db.GetForProduct(id));
+        }
+
         public ActionResult Create()
         {
             Product product = new Product();

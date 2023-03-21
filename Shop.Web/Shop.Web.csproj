@@ -216,6 +216,7 @@
     <Content Include="Areas\Admin\Views\AddProduct\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AddProduct\Create.cshtml" />
     <Content Include="Areas\Admin\Views\AddProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AddProduct\ShowProduct.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
