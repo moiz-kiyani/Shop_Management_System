@@ -13,24 +13,24 @@ namespace Shop.Data.Repository
     {
         private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
 
-        public User Signin(User user)
+        public bool Signin(string email, string password)
         {
+            bool isAuthenticated = false;
             using (SqlConnection conn = new SqlConnection(Connect))
             {
                 string SigninQurey = "select Email,Password from [User] where Email=@Email and Password=@Password";
                 var cmd = new SqlCommand(SigninQurey, conn);
-                cmd.Parameters.AddWithValue("@Email", user.Email);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Email",email);
+                cmd.Parameters.AddWithValue("@Password", password);
                 conn.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
-                if(sdr.Read())
+                if(sdr.HasRows)
                 {
-                     user.Email = sdr[0].ToString();
-                    user.Password = sdr[1].ToString();
+                    isAuthenticated = true;
                 }
-                    return user;
-
+                sdr.Close();
             }
+            return isAuthenticated;
         }
 
         public void Signup(User user)

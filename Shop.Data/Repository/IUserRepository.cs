@@ -9,7 +9,7 @@ namespace Shop.Data.Repository
 {
     internal interface IUserRepository
     {
-        User Signin(User user);
+        bool Signin(string email, string password);
         void Signup(User user);
     }
 }

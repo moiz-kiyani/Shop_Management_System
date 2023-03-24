@@ -22,11 +22,19 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            if (db.Signin(user))
-            db.Signin(user);
-           return RedirectToAction("Menu", "Account");
-            
-            return View("Login");
+            if(ModelState.IsValid)
+            {
+                if(db.Signin(user.Email,user.Password))
+                {
+                    Session["Email"]= user.Email;
+                    return RedirectToAction("Menu");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid email or password");
+                }
+            }
+            return View(user);
         }
 
         public ActionResult Menu()
