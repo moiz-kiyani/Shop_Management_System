@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace Shop.Web.Areas.Admin.Controllers
 {
+    [Authorize]
     public class AddProductController : Controller
     {
         private readonly ProductRepository db = new ProductRepository();

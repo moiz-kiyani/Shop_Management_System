@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Shop.Web.Areas.Admin.Controllers
 {
+    [Authorize]
     public class AddCategoryController : Controller
     {
         private readonly CategoryRepository db = new CategoryRepository();
