@@ -148,15 +148,26 @@ input[type="checkbox"]{
             <li><a href="~/Home/Index">Store View</a></li>
             <li><a href="~/Admin/AddProduct/Index">Add Products</a></li>
             <li><a href="~/Admin/AddCategory/Index">Add Category</a></li>
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("signout", "Account", FormMethod.Post))
+            {
+                <a href="javascript:;" style="color:white" onclick="document.forms[0].submit();">Logout</a>
+            }
         </ul>
     </div>
     <div class="content">
-        <div class="title">
-            WELCOME TO THE ADMIN PANEL
+        <div>
+            Welcome
+            <b>@HttpContext.Current.User.Identity.Name</b>
+            <br />
+            <br />
+            <div class="title">
+                TO THE ADMIN PANEL
+            </div>
+            <p>
+                For Menu Go To Right Corner
+            </p>
         </div>
-        <p>
-            For Menu Go To Right Corner
-        </p>
     </div>
 </body>
 

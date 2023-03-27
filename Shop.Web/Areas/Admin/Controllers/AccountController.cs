@@ -26,7 +26,8 @@ namespace Shop.Web.Areas.Admin.Controllers
             {
                 if(db.Signin(user.Email,user.Password))
                 {
-                    Session["Email"]= user.Email;
+                    //Session["Email"]= user.Email;
+                    FormsAuthentication.SetAuthCookie(user.Email, false);
                     return RedirectToAction("Menu");
                 }
                 else
@@ -55,7 +56,15 @@ namespace Shop.Web.Areas.Admin.Controllers
                 db.Signup(user);
                 return RedirectToAction("Login");
             }
-            return View(user);
+            return RedirectToAction("signup");
+        }
+
+        [HttpPost]
+        public ActionResult Signout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Login");
         }
     }
 }
