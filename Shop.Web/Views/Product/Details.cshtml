@@ -11,7 +11,7 @@
             <input type="hidden" name="id" value="@Model.Id"/>
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Url.Content(Model.ImageUrl)" alt="..."></div>
             <div class="col-md-6">
-                <div class="small mb-1">SKU: @Html.DisplayFor(model => model.ProductId)</div>
+                <div class="small mb-1">SKU: @Html.DisplayFor(model => model.Id)</div>
                 <h1 class="display-5 fw-bolder">@Html.DisplayFor(model => model.Name)</h1>
                 <div class="fs-5 mb-5">
                     <span>$@Html.DisplayFor(model => model.Price)</span>
@@ -24,7 +24,7 @@
 
                         <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                             <i class="bi-cart-fill me-1">
-                                <a class="btn mt-auto" href="@Url.Action("SendToCart", "Cart", new { Model.ProductId })">Add To Cart</a>
+                                <a class="btn mt-auto" href="@Url.Action("SendToCart", "Cart", new { Model.Id })">Add To Cart</a>
                             </i>
                         </button>
                     </div>

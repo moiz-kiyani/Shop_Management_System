@@ -343,7 +343,7 @@
                         {
                             <tr>
                                <td>
-                                   <a class="nav-link active" aria-current="page" href="~/Admin/AddCategory/GoToProducts/@item.CategoryId" />
+                                   <a class="nav-link active" aria-current="page" href="~/Admin/AddCategory/GoToProducts/@item.Id" />
                                    @Html.DisplayFor(modelItem => item.CategoryName)
                                </td>
                                 <td>
@@ -353,8 +353,8 @@
                                     <img src="@Url.Content(item.CategoryImageUrl)" width="80" height="50" />
                                 </td>
                                 <td>
-                                    <a @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId })
-                                    <a @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId },
+                                    <a @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                    <a @Html.ActionLink("Delete", "Delete", new { id = item.Id },
                                        new { onclick = "return confirm('Are you sure you wish to delete this article?');" })
                                 </td>
                             </tr>

@@ -73,7 +73,7 @@ namespace Shop.Data.Services
 
                 while (sdr.Read())
                 {
-                    product.ProductId= sdr.GetInt32(0);
+                    product.Id= sdr.GetInt32(0);
                     product.Name = sdr.GetString(1);
                     product.Price = sdr.GetInt32(2);
                     product.Description = sdr.GetString(3);
@@ -109,7 +109,7 @@ namespace Shop.Data.Services
                 {
                     product.Add(new Product()
                     {
-                        ProductId = Convert.ToInt32(row[0]),
+                        Id = Convert.ToInt32(row[0]),
                         Name = row[1].ToString(),
                         Price = Convert.ToInt32(row[2]),
                         Description = row[3].ToString(),
@@ -145,7 +145,7 @@ namespace Shop.Data.Services
                 {
                     product.Add(new Product()
                     {
-                        ProductId = Convert.ToInt32(row[0]),
+                        Id = Convert.ToInt32(row[0]),
                         Name = row[1].ToString(),
                         Price = Convert.ToInt32(row[2]),
                         Description = row[3].ToString(),
@@ -179,7 +179,7 @@ namespace Shop.Data.Services
                 {
                     categories.Add(new Category()
                     {
-                        CategoryId = Convert.ToInt32(row[0]),
+                        Id = Convert.ToInt32(row[0]),
                         CategoryName = row[1].ToString(),
                         CategoryDescription = row[2].ToString(),
                         CategoryImageUrl = row[3].ToString(),
@@ -212,13 +212,13 @@ namespace Shop.Data.Services
                 {
                     product.Add(new Product()
                     {
-                        ProductId = Convert.ToInt32(row[0]),
-                        Name = row[2].ToString(),
+                        Id = Convert.ToInt32(row[0]),
+                        Name = row[1].ToString(),
+                        Price = Convert.ToInt32(row[2]),
                         Description = row[3].ToString(),
-                        ImageUrl = row[4].ToString(),
-                        Price = Convert.ToInt32(row[5]),
-                        Quantity = Convert.ToInt32(row[6]),
-                        CategoryId = Convert.ToInt32(row[7])
+                        Quantity = Convert.ToInt32(row[4]),
+                        ImageUrl = row[5].ToString(),
+                        CategoryId = Convert.ToInt32(row[6]),
                     });
             }
 

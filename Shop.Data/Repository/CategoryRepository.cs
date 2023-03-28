@@ -54,7 +54,7 @@ namespace Shop.Data.Services
 
                 while(sdr.Read())
                 {
-                    category.CategoryId = Convert.ToInt32(sdr[0]);
+                    category.Id = Convert.ToInt32(sdr[0]);
                     category.CategoryName = sdr[1].ToString();
                     category.CategoryDescription = sdr[2].ToString();   
                     category.CategoryImageUrl = sdr[3].ToString();
@@ -98,7 +98,7 @@ namespace Shop.Data.Services
                 {
                     categories.Add(new Category()
                     {
-                        CategoryId = Convert.ToInt32(row[0]),
+                        Id = Convert.ToInt32(row[0]),
                         CategoryName = row[1].ToString(),
                         CategoryDescription = row[2].ToString(),
                         CategoryImageUrl = row[3].ToString(),
