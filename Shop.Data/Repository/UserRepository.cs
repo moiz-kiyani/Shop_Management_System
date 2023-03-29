@@ -11,37 +11,49 @@ namespace Shop.Data.Repository
 {
     public class UserRepository : IUserRepository 
     {
-        private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
+        private readonly ApplicationDbContext _context;
+        public UserRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        /*The below connection string is for ado.net*/
+        //private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
 
         public bool Signin(string email, string password)
         {
             bool isAuthenticated = false;
-            using (SqlConnection conn = new SqlConnection(Connect))
+
+                        /*The below code is for ado.net*/
+            //using (var db = new ApplicationDbContext())
+            //{
+            //    var user = db.users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            //    if (user != null)
+            //    {
+            //        isAuthenticated = true;
+            //    }
+            //      return isAuthenticated;}
+            var user = _context.users.FirstOrDefault(x => x.Email == email && x.Password == password);
+            if(user !=null)
             {
-                string SigninQurey = "select Email,Password from [User] where Email=@Email and Password=@Password";
-                var cmd = new SqlCommand(SigninQurey, conn);
-                cmd.Parameters.AddWithValue("@Email",email);
-                cmd.Parameters.AddWithValue("@Password", password);
-                conn.Open();
-                SqlDataReader sdr = cmd.ExecuteReader();
-                if(sdr.HasRows)
-                {
-                    isAuthenticated = true;
-                }
-                sdr.Close();
+                isAuthenticated = true;
             }
             return isAuthenticated;
         }
 
         public void Signup(User user)
         {
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string SignUpQurey = "insert into [User] values('" + user.Name + "', '" + user.Email + "', '" + user.Password + "')";
-                var cmd = new SqlCommand(SignUpQurey, con);
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
+            _context.users.Add(user);
+            _context.SaveChanges();
+
+            /*The below connection string is for ado.net*/
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string SignUpQurey = "insert into [User] values('" + user.Name + "', '" + user.Email + "', '" + user.Password + "')";
+            //    var cmd = new SqlCommand(SignUpQurey, con);
+            //    con.Open();
+            //    cmd.ExecuteNonQuery();
+            //}
         }
     }
 }

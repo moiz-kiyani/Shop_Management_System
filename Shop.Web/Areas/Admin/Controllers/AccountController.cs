@@ -1,5 +1,6 @@
 ﻿using Shop.Data.Models;
 using Shop.Data.Repository;
+using Shop.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,15 @@ namespace Shop.Web.Areas.Admin.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserRepository db = new UserRepository();
+        private readonly ApplicationDbContext _context;
+
+        public AccountController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+                    /*This is a connection for Ado.Net*/
+        //private readonly UserRepository db = new UserRepository();
 
         // GET: Admin/Home
         public ActionResult Login()
@@ -22,9 +31,10 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            if(ModelState.IsValid)
+            UserRepository userRepository = new UserRepository(_context);
+            if (ModelState.IsValid)
             {
-                if(db.Signin(user.Email,user.Password))
+                if(userRepository.Signin(user.Email,user.Password))
                 {
                     //Session["Email"]= user.Email;
                     FormsAuthentication.SetAuthCookie(user.Email, false);
@@ -51,9 +61,10 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Signup(User user)
         {
-            if(ModelState.IsValid)
+            UserRepository userRepository = new UserRepository(_context);
+            if (ModelState.IsValid)
             {
-                db.Signup(user);
+                userRepository.Signup(user);
                 return RedirectToAction("Login");
             }
             return RedirectToAction("signup");

@@ -10,7 +10,15 @@ namespace Shop.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ProductRepository db = new ProductRepository();
+        private readonly ApplicationDbContext _context;
+
+        public ProductController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        /*This is a connection for Ado.Net*/
+        //private readonly ProductRepository db = new ProductRepository();
 
 
         //IProductRepository db;
@@ -19,23 +27,26 @@ namespace Shop.Web.Controllers
         //   db = new ProductRepository();
         //}
         // GET: Product
-        
+
         public ActionResult Index()
         {
-            var model = db.GetAll();
+            ProductRepository productRepository = new ProductRepository(_context);
+            var model = productRepository.GetAll();
             
             return View(model);
         }
 
         public ActionResult Details(int id)
         {
-            var model = db.Get(id);
+            ProductRepository productRepository = new ProductRepository(_context);
+            var model = productRepository.Get(id);
 
             return View(model);
         }
         public ActionResult Search(string search)
         {
-            var model = db.Search(search);
+            ProductRepository productRepository = new ProductRepository(_context);
+            var model = productRepository.Search(search);
 
             return View(model);
         }

@@ -12,13 +12,22 @@ namespace Shop.Web.Areas.Admin.Controllers
     [Authorize]
     public class AddCategoryController : Controller
     {
-        private readonly CategoryRepository db = new CategoryRepository();
-        private readonly ProductRepository pdb = new ProductRepository();
+        private readonly ApplicationDbContext _context;
+
+        public AddCategoryController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        /*This is a connection for Ado.Net*/
+        //private readonly CategoryRepository db = new CategoryRepository();
+        //private readonly ProductRepository pdb = new ProductRepository();
 
         // GET: Admin/Category
         public ActionResult Index()
         {
-            return View(db.GetAll());
+            CategoryRepository categoryRepository = new CategoryRepository(_context);
+            return View(categoryRepository.GetAll());
         }
 
         public ActionResult GoToProducts(int id)
@@ -34,11 +43,12 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(Category category)
         {
+            CategoryRepository categoryRepository = new CategoryRepository(_context);
             string filename = Path.GetFileName(category.File.FileName);
             string Extension = Path.GetExtension(category.File.FileName);
             string path = Path.Combine(Server.MapPath("~/Images/"), filename);
             category.CategoryImageUrl = "~/Images/" + filename;
-            db.Create(category);
+            categoryRepository.Create(category);
             {
                 if (category.File != null)
                 {
@@ -51,7 +61,8 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var cat = db.Get(id);
+            CategoryRepository categoryRepository = new CategoryRepository(_context);
+            var cat = categoryRepository.Get(id);
             Session["Image"] = cat.CategoryImageUrl;
             if (cat == null)
             {
@@ -63,9 +74,10 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Category category)
         {
+            CategoryRepository categoryRepository = new CategoryRepository(_context);
             if (ModelState.IsValid)
             {
-                var dbCategory = db.Get(category.Id);
+                var dbCategory = categoryRepository.Get(category.Id);
                 if (category.File != null)
                 {
                     string filename = Path.GetFileName(category.File.FileName);
@@ -89,7 +101,7 @@ namespace Shop.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    db.Update(category);
+                    categoryRepository.Update(category);
                     return RedirectToAction("Index");
                 }
             }
@@ -99,14 +111,15 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            var category = db.Get(id);
+            CategoryRepository categoryRepository = new CategoryRepository(_context);
+            var category = categoryRepository.Get(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                db.Delete(id);
+                categoryRepository.Delete(id);
             }
             return RedirectToAction("Index");
         }

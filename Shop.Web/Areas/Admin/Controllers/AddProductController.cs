@@ -13,40 +13,52 @@ namespace Shop.Web.Areas.Admin.Controllers
     [Authorize]
     public class AddProductController : Controller
     {
-        private readonly ProductRepository db = new ProductRepository();
+        private readonly ApplicationDbContext _context;
+
+        public AddProductController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        /*This is a connection for Ado.Net*/
+        //private readonly ProductRepository db = new ProductRepository();
 
         // GET: Admin/AddProduct
         public ActionResult Index()
         {
-            return View(db.GetAll());
+            ProductRepository productRepository = new ProductRepository(_context);
+            return View(productRepository.GetAll());
         }
 
         public ActionResult ShowProduct(int id)
         {
-            return View(db.GetForProduct(id));
+            ProductRepository productRepository = new ProductRepository(_context);
+            return View(productRepository.GetForProduct(id));
         }
 
         public ActionResult Create()
         {
+            ProductRepository productRepository = new ProductRepository(_context);
             Product product = new Product();
-            product.categories = db.GetCategories();
+            product.categories = productRepository.GetCategories();
             return View(product);
         }
 
         [HttpPost]
         public ActionResult Create(Product product)
         {
+            ProductRepository productRepository = new ProductRepository(_context);
             //List<Category> categories = categoryRepository.GetAll();
             //DropDownList dropDownList = new DropDownList();
             //dropDownList.DataSource = categories;
-           // dropDownList.DataTextField = categories.
+            // dropDownList.DataTextField = categories.
             //dropDownList.DataValueField = 
 
             string filename = Path.GetFileName(product.File.FileName);
             string Extension = Path.GetExtension(product.File.FileName);
             string path = Path.Combine(Server.MapPath("~/Images/"), filename);
             product.ImageUrl = "~/Images/" + filename;
-            db.Create(product);
+            productRepository.Create(product);
                 if (product.File != null)
                 {
                     product.File.SaveAs(path);
@@ -56,7 +68,8 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var cat = db.Get(id);
+            ProductRepository productRepository = new ProductRepository(_context);
+            var cat = productRepository.Get(id);
             Session["Image"] = cat.ImageUrl;
             if (cat == null)
             {
@@ -68,9 +81,10 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Product product)
         {
+            ProductRepository productRepository = new ProductRepository(_context);
             if (ModelState.IsValid)
             {
-                var dbCategory = db.Get(product.Id);
+                var dbCategory = productRepository.Get(product.Id);
                 if (product.File != null)
                 {
                     string filename = Path.GetFileName(product.File.FileName);
@@ -94,7 +108,7 @@ namespace Shop.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    db.Update(product);
+                    productRepository.Update(product);
                     return RedirectToAction("Index");
                 }
             }

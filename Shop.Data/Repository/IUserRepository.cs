@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Data.Repository
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
         bool Signin(string email, string password);
         void Signup(User user);

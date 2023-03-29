@@ -55,9 +55,9 @@
   <ItemGroup>
     <Compile Include="GenericRepository\IRepository.cs" />
     <Compile Include="GenericRepository\Repository.cs" />
-    <Compile Include="Migrations\202303280910436_Starting_EF.cs" />
-    <Compile Include="Migrations\202303280910436_Starting_EF.designer.cs">
-      <DependentUpon>202303280910436_Starting_EF.cs</DependentUpon>
+    <Compile Include="Migrations\202303290806291_Starting_EF.cs" />
+    <Compile Include="Migrations\202303290806291_Starting_EF.designer.cs">
+      <DependentUpon>202303290806291_Starting_EF.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -136,8 +136,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202303280910436_Starting_EF.resx">
-      <DependentUpon>202303280910436_Starting_EF.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303290806291_Starting_EF.resx">
+      <DependentUpon>202303290806291_Starting_EF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

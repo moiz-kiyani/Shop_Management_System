@@ -5,16 +5,27 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 
 namespace Shop.Data.Services
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
+        private readonly ApplicationDbContext _context;
+        public ProductRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+
+                        /*The below connection string is for ado.net*/
+        //private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
+        
         //public ProductRepository()
         //{
         //    Items = new List<Product>()
@@ -41,189 +52,213 @@ namespace Shop.Data.Services
 
         public void Create(Product product)
         {
-            using(SqlConnection con = new SqlConnection(Connect))
-            {
-                string InsertQurey = "insert into Products values('"+product.Name+"', '"+product.Price+"', '"+product.Description+"', '"+product.Quantity+"', '"+product.ImageUrl+"' , '"+product.CategoryId+"')";
-                var cmd = new SqlCommand(InsertQurey, con);
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
+            _context.products.Add(product);
+            _context.SaveChanges();
+
+                                /*The below code is for ado.net*/
+            //using(SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string InsertQurey = "insert into Products values('"+product.Name+"', '"+product.Price+"', '"+product.Description+"', '"+product.Quantity+"', '"+product.ImageUrl+"' , '"+product.CategoryId+"')";
+            //    var cmd = new SqlCommand(InsertQurey, con);
+            //    con.Open();
+            //    cmd.ExecuteNonQuery();
+            //}
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.products.Find(id);
+            _context.products.Remove(product);
+            _context.SaveChanges();
         }
 
         public Product Get(int id)
         {
-            Product product = new Product();
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
-                //"FROM Products " +
-                //"INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
+            return _context.products.Find(id);
 
-                string ShowItemQuery = "select * from Products where ID =" + id + "";
-                SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
-                // cmd.ExecuteNonQuery();
-                con.Open();
-                SqlDataReader sdr = cmd.ExecuteReader();
+            /*The below code is for ado.net*/
+            //Product product = new Product();
 
-                while (sdr.Read())
-                {
-                    product.Id= sdr.GetInt32(0);
-                    product.Name = sdr.GetString(1);
-                    product.Price = sdr.GetInt32(2);
-                    product.Description = sdr.GetString(3);
-                    product.Quantity = sdr.GetInt32(4);
-                    product.ImageUrl = sdr.GetString(5);
-                    product.CategoryId = sdr.GetInt32(6);
-                }
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
+            //    //"FROM Products " +
+            //    //"INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
 
-                return product;
-            }
+            //    string ShowItemQuery = "select * from Products where ID =" + id + "";
+            //    SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
+            //    // cmd.ExecuteNonQuery();
+            //    con.Open();
+            //    SqlDataReader sdr = cmd.ExecuteReader();
+
+            //    while (sdr.Read())
+            //    {
+            //        product.Id= sdr.GetInt32(0);
+            //        product.Name = sdr.GetString(1);
+            //        product.Price = sdr.GetInt32(2);
+            //        product.Description = sdr.GetString(3);
+            //        product.Quantity = sdr.GetInt32(4);
+            //        product.ImageUrl = sdr.GetString(5);
+            //        product.CategoryId = sdr.GetInt32(6);
+            //    }
+
+            //    return product;
+            //}
         }
 
         public IEnumerable<Product> GetForProduct(int id)
         {
-            List<Product> product = new List<Product>();
+            return _context.products.Where(p => p.CategoryId == id).ToList();
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
-                //"FROM Products " +
-                //"INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
 
-                string ShowItemQuery = "select * from Products where CategoryID =" + id + "";
-                SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
-                // cmd.ExecuteNonQuery();
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+                            /*The below code is for ado.net*/
+            //List<Product> product = new List<Product>();
 
-                con.Open();
-                sda.Fill(dt);
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description" +
+            //    //"FROM Products " +
+            //    //"INNER JOIN Category ON Products.CategoryID = Categories.CategoryID";
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    product.Add(new Product()
-                    {
-                        Id = Convert.ToInt32(row[0]),
-                        Name = row[1].ToString(),
-                        Price = Convert.ToInt32(row[2]),
-                        Description = row[3].ToString(),
-                        Quantity = Convert.ToInt32(row[4]),
-                        ImageUrl = row[5].ToString(),
-                        CategoryId = Convert.ToInt32(row[6]),
+            //    string ShowItemQuery = "select * from Products where CategoryID =" + id + "";
+            //    SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
+            //    // cmd.ExecuteNonQuery();
+            //    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //    DataTable dt = new DataTable();
 
-                    });
-                }
-            }
-            return product;
+            //    con.Open();
+            //    sda.Fill(dt);
+
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        product.Add(new Product()
+            //        {
+            //            Id = Convert.ToInt32(row[0]),
+            //            Name = row[1].ToString(),
+            //            Price = Convert.ToInt32(row[2]),
+            //            Description = row[3].ToString(),
+            //            Quantity = Convert.ToInt32(row[4]),
+            //            ImageUrl = row[5].ToString(),
+            //            CategoryId = Convert.ToInt32(row[6]),
+
+            //        });
+            //    }
+            //}
+            //return product;
         }
-        
+
 
         public List<Product> GetAll()
         
         {
-            List<Product> product = new List<Product>();
+            return _context.products.ToList();
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string ShowDetailsQuery = "select * from products ";
-                SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
-                // cmd.ExecuteNonQuery();
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+                        /*The below code is for ado.net*/
+            //List<Product> product = new List<Product>();
 
-                con.Open();
-                sda.Fill(dt);
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string ShowDetailsQuery = "select * from products ";
+            //    SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
+            //    // cmd.ExecuteNonQuery();
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    product.Add(new Product()
-                    {
-                        Id = Convert.ToInt32(row[0]),
-                        Name = row[1].ToString(),
-                        Price = Convert.ToInt32(row[2]),
-                        Description = row[3].ToString(),
-                        Quantity = Convert.ToInt32(row[4]),
-                        ImageUrl = row[5].ToString(),
-                        CategoryId = Convert.ToInt32(row[6]),
+            //    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //    DataTable dt = new DataTable();
 
-                    });
-                }
-            }
-                return product;
-            }
+            //    con.Open();
+            //    sda.Fill(dt);
+
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        product.Add(new Product()
+            //        {
+            //            Id = Convert.ToInt32(row[0]),
+            //            Name = row[1].ToString(),
+            //            Price = Convert.ToInt32(row[2]),
+            //            Description = row[3].ToString(),
+            //            Quantity = Convert.ToInt32(row[4]),
+            //            ImageUrl = row[5].ToString(),
+            //            CategoryId = Convert.ToInt32(row[6]),
+
+            //        });
+            //    }
+            //}
+            //    return product;
+        }
 
         public List<Category> GetCategories()
         {
-            List<Category> categories = new List<Category>();
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string ShowDetailsQuery = "select * from category ";
-                SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
-                // cmd.ExecuteNonQuery();
+            return _context.categories.ToList();
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+            //List<Category> categories = new List<Category>();
 
-                con.Open();
-                sda.Fill(dt);
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string ShowDetailsQuery = "select * from category ";
+            //    SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
+            //    // cmd.ExecuteNonQuery();
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    categories.Add(new Category()
-                    {
-                        Id = Convert.ToInt32(row[0]),
-                        CategoryName = row[1].ToString(),
-                        CategoryDescription = row[2].ToString(),
-                        CategoryImageUrl = row[3].ToString(),
-                    });
-                }
-                return categories;
-            }
+            //    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //    DataTable dt = new DataTable();
+
+            //    con.Open();
+            //    sda.Fill(dt);
+
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        categories.Add(new Category()
+            //        {
+            //            Id = Convert.ToInt32(row[0]),
+            //            CategoryName = row[1].ToString(),
+            //            CategoryDescription = row[2].ToString(),
+            //            CategoryImageUrl = row[3].ToString(),
+            //        });
+            //    }
+            //    return categories;
+            //}
         }
 
         public IEnumerable<Product> GetForCategory(int id)
         {
-            List<Product> product = new List<Product>();
+            return _context.products.Where(p => p.CategoryId == id).ToList();
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description, Products.ImageUrl " +
-                //                        "FROM Products " +
-                //                        "JOIN Category ON Products.CategoryID = Categories.ID " +
-                //                        "WHERE Products.CategoryId = " + id;
+                            /*The below code is for ado.net*/
+            //List<Product> product = new List<Product>();
 
-                string ShowItemQuery = "select * from Products where CategoryID =" + id + "";
-                SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    //string ShowItemQuery = "SELECT Products.Name, Products.Price, Products.Description, Products.ImageUrl " +
+            //    //                        "FROM Products " +
+            //    //                        "JOIN Category ON Products.CategoryID = Categories.ID " +
+            //    //                        "WHERE Products.CategoryId = " + id;
 
-                con.Open();
-                sda.Fill(dt);
+            //    string ShowItemQuery = "select * from Products where CategoryID =" + id + "";
+            //    SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
+            //    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //    DataTable dt = new DataTable();
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    product.Add(new Product()
-                    {
-                        Id = Convert.ToInt32(row[0]),
-                        Name = row[1].ToString(),
-                        Price = Convert.ToInt32(row[2]),
-                        Description = row[3].ToString(),
-                        Quantity = Convert.ToInt32(row[4]),
-                        ImageUrl = row[5].ToString(),
-                        CategoryId = Convert.ToInt32(row[6]),
-                    });
-            }
+            //    con.Open();
+            //    sda.Fill(dt);
 
-                return product;
-            }
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        product.Add(new Product()
+            //        {
+            //            Id = Convert.ToInt32(row[0]),
+            //            Name = row[1].ToString(),
+            //            Price = Convert.ToInt32(row[2]),
+            //            Description = row[3].ToString(),
+            //            Quantity = Convert.ToInt32(row[4]),
+            //            ImageUrl = row[5].ToString(),
+            //            CategoryId = Convert.ToInt32(row[6]),
+            //        });
+            //}
+
+            //    return product;
+            //}
         }
 
         public IEnumerable<Product> Search(string search)
@@ -238,13 +273,17 @@ namespace Shop.Data.Services
 
         public void Update(Product product)
         {
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                con.Open();
-                string UpdateQurey = "update products set Name = '" + product.Name + "', Description = '" + product.Description + "', ImageUrl = '" + product.ImageUrl + "',product.Price = '" + product.Price + "',product.Quantity = '" + product.Quantity + "',  where ID =" + product.Id + "";
-                SqlCommand cmd = new SqlCommand(UpdateQurey, con);
-                cmd.ExecuteNonQuery();
-            }
+            _context.products.AddOrUpdate(product);
+
+
+                            /*The below code is for ado.net*/
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    con.Open();
+            //    string UpdateQurey = "update products set Name = '" + product.Name + "', Description = '" + product.Description + "', ImageUrl = '" + product.ImageUrl + "',product.Price = '" + product.Price + "',product.Quantity = '" + product.Quantity + "',  where ID =" + product.Id + "";
+            //    SqlCommand cmd = new SqlCommand(UpdateQurey, con);
+            //    cmd.ExecuteNonQuery();
+            //}
         }
     }
 }

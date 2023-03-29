@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,14 @@ namespace Shop.Data.Services
 {
     public class CategoryRepository :Repository<Category> ,ICategoryRepository
     {
-             private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
+        private readonly ApplicationDbContext _context;
+        public CategoryRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+                        /*The below connection string is for ado.net*/
+        //private readonly string Connect = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
 
         //public CategoryRepository()
         //{
@@ -30,38 +38,45 @@ namespace Shop.Data.Services
 
         public void Create(Category category)
         {
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string InsertQurey = "Insert into Category values('" + category.CategoryName + "','" + category.CategoryDescription + "','" + category.CategoryImageUrl + "')";
-                var cmd = new SqlCommand(InsertQurey, con);
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
+            _context.categories.Add(category);
+            _context.SaveChanges();
+
+                                /*The below code is for ado.net*/
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string InsertQurey = "Insert into Category values('" + category.CategoryName + "','" + category.CategoryDescription + "','" + category.CategoryImageUrl + "')";
+            //    var cmd = new SqlCommand(InsertQurey, con);
+            //    con.Open();
+            //    cmd.ExecuteNonQuery();
+            //}
         }
 
 
         public Category Get(int id)
         {
-            Category category = new Category();
+            return _context.categories.Find(id);
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string ShowItemQuery = "select * from Category where ID =" + id + "";
-                SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
-                // cmd.ExecuteNonQuery();
-                con.Open();
-                SqlDataReader sdr = cmd.ExecuteReader();
+                    /*The below code is for ado.net*/
+            //Category category = new Category();
 
-                while(sdr.Read())
-                {
-                    category.Id = Convert.ToInt32(sdr[0]);
-                    category.CategoryName = sdr[1].ToString();
-                    category.CategoryDescription = sdr[2].ToString();   
-                    category.CategoryImageUrl = sdr[3].ToString();
-                }
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string ShowItemQuery = "select * from Category where ID =" + id + "";
+            //    SqlCommand cmd = new SqlCommand(ShowItemQuery, con);
+            //    // cmd.ExecuteNonQuery();
+            //    con.Open();
+            //    SqlDataReader sdr = cmd.ExecuteReader();
 
-                return category;
-            }
+            //    while(sdr.Read())
+            //    {
+            //        category.Id = Convert.ToInt32(sdr[0]);
+            //        category.CategoryName = sdr[1].ToString();
+            //        category.CategoryDescription = sdr[2].ToString();   
+            //        category.CategoryImageUrl = sdr[3].ToString();
+            //    }
+
+            //    return category;
+            //}
         }
 
         //private int ToInt32(object value, int defaultValue) 
@@ -80,54 +95,65 @@ namespace Shop.Data.Services
 
         public List<Category> GetAll()
         {
-            List<Category> categories = new List<Category>();
+            return _context.categories.ToList();
 
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string ShowDetailsQuery = "select * from category ";
-                SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
-                // cmd.ExecuteNonQuery();
+                        /*The below code is for ado.net*/
+            //List<Category> categories = new List<Category>();
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string ShowDetailsQuery = "select * from category ";
+            //    SqlCommand cmd = new SqlCommand(ShowDetailsQuery, con);
+            //    // cmd.ExecuteNonQuery();
 
-                con.Open();
-                sda.Fill(dt);
+            //    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            //    DataTable dt = new DataTable();
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    categories.Add(new Category()
-                    {
-                        Id = Convert.ToInt32(row[0]),
-                        CategoryName = row[1].ToString(),
-                        CategoryDescription = row[2].ToString(),
-                        CategoryImageUrl = row[3].ToString(),
-                    });
-                }
-                return categories;
-            }
+            //    con.Open();
+            //    sda.Fill(dt);
+
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        categories.Add(new Category()
+            //        {
+            //            Id = Convert.ToInt32(row[0]),
+            //            CategoryName = row[1].ToString(),
+            //            CategoryDescription = row[2].ToString(),
+            //            CategoryImageUrl = row[3].ToString(),
+            //        });
+            //    }
+            //    return categories;
+            //}
         }
 
         public void Update(Category category)
         {
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                con.Open();
-                string UpdateQurey = "update Category set CategoryName = '" + category.CategoryName + "', CategoryDescription = '" + category.CategoryDescription + "', CategoryImageUrl = '" + category.CategoryImageUrl + "',  where ID =" + category.Id + "";
-                SqlCommand cmd = new SqlCommand(UpdateQurey, con);
-                cmd.ExecuteNonQuery();
-            }
+            _context.categories.AddOrUpdate(category);
+            _context.SaveChanges();
+
+                        /*The below code is for ado.net*/
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    con.Open();
+            //    string UpdateQurey = "update Category set CategoryName = '" + category.CategoryName + "', CategoryDescription = '" + category.CategoryDescription + "', CategoryImageUrl = '" + category.CategoryImageUrl + "',  where ID =" + category.Id + "";
+            //    SqlCommand cmd = new SqlCommand(UpdateQurey, con);
+            //    cmd.ExecuteNonQuery();
+            //}
         }
 
         public void Delete(int id)
         {
-            using (SqlConnection con = new SqlConnection(Connect))
-            {
-                string DeleteQurey = "delete from Category where ID =" + id + "";
-                var cmd = new SqlCommand(DeleteQurey, con);
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
+            _context.categories.Remove(Get(id));
+            _context.SaveChanges();
+
+            /*The below code is for ado.net*/
+            //using (SqlConnection con = new SqlConnection(Connect))
+            //{
+            //    string DeleteQurey = "delete from Category where ID =" + id + "";
+            //    var cmd = new SqlCommand(DeleteQurey, con);
+            //    con.Open();
+            //    cmd.ExecuteNonQuery();
+            //}
         }
     }
 }

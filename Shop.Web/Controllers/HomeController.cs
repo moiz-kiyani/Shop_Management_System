@@ -1,4 +1,5 @@
-﻿using Shop.Data.Services;
+﻿using Shop.Data.Models;
+using Shop.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,17 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ProductRepository db = new ProductRepository();
+        private readonly ApplicationDbContext _context;
 
+        public HomeController()
+        {
+            _context = new ApplicationDbContext();
+        }
         // GET: Home
         public ActionResult Index()
         {
-            var model = db.GetAll();
+            ProductRepository productRepository = new ProductRepository(_context);
+            var model = productRepository.GetAll();
             return View(model);
         }
 
