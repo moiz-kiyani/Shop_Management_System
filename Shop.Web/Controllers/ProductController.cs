@@ -1,4 +1,5 @@
-﻿using Shop.Data.Models;
+﻿using NHibernate.Cfg;
+using Shop.Data.Models;
 using Shop.Data.Services;
 using System;
 using System.Collections.Generic;
@@ -10,52 +11,37 @@ namespace Shop.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ProductRepository _productRepository;
 
         public ProductController()
         {
-            _context = new ApplicationDbContext();
+
+            var sessionFactory = new Configuration().Configure().BuildSessionFactory();
+            var session = sessionFactory.OpenSession();
+            _productRepository = new ProductRepository(session);
+
         }
 
-        /*This is a connection for Ado.Net*/
-        //private readonly ProductRepository db = new ProductRepository();
-
-
-        //IProductRepository db;
-        //public ProductController()
-        //{
-        //   db = new ProductRepository();
-        //}
         // GET: Product
-
         public ActionResult Index()
         {
-            ProductRepository productRepository = new ProductRepository(_context);
-            var model = productRepository.GetAll();
+            var model = _productRepository.GetAll();
             
             return View(model);
         }
 
         public ActionResult Details(int id)
         {
-            ProductRepository productRepository = new ProductRepository(_context);
-            var model = productRepository.Get(id);
+            var model = _productRepository.Get(id);
 
             return View(model);
         }
         public ActionResult Search(string search)
         {
-            ProductRepository productRepository = new ProductRepository(_context);
-            var model = productRepository.Search(search);
+            var model = _productRepository.Search(search);
 
             return View(model);
         }
 
-        //[HttpPost]
-        //public ActionResult Search(string search)
-        //{
-        //    var model = db.Search(search);
-        //    return View(model);
-        //}
     }
 }

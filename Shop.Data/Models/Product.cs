@@ -15,46 +15,43 @@ namespace Shop.Data.Models
     [Table("Products")]
     public class Product : IEntity
     {
-        public List<Category> categories;
+        //public List<Category> categories;
 
         [Column("ID")]
         //IENTITY Id As Primary Key for All Models
-        public int Id { get; set; }
-
-        
-        //PRODUCT ID
-        //public int ProductId { get; set; }
+        public virtual int Id { get; set; }
 
         [Column("Name")]
         [Required(ErrorMessage ="Name Must be Required ")]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Column("Price")]
         [Required(ErrorMessage = "Price Must be Required ")]
-        public int Price { get; set; }
+        public virtual int Price { get; set; }
 
         [Column("Description")]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         [Column("ImageUrl")]
-        public string ImageUrl { get; set; }
-        //public string CategoryType { get; set; }
+        public virtual string ImageUrl { get; set; }
 
         [ForeignKey("Category")]
         [Column("CategoryID")]
         [Required(ErrorMessage = "Must Select the Category ")]
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public virtual int CategoryId { get; set; }
+        //private IList<Category> _category = new List<Category>();
+
+        //public virtual IList<Category> Category
+        //{
+        //    get { return _category; }
+        //    set { _category = value; }
+        //}
 
         [Column("Quantity")]
-        public int Quantity { get; set; }
-        //public int TotalBill { get; set; }
-        //This will return the instance of the category
-        // public virtual Category Category { get; set; }
+        public virtual int Quantity { get; set; }
 
         [NotMapped]
-        public HttpPostedFileBase File { get; set; }
-
-        //public List<Category> categories { get; set; } 
+        public virtual HttpPostedFileBase File { get; set; }
+        public virtual List<Category> categories { get; set; }
     }
 }

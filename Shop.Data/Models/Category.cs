@@ -13,23 +13,23 @@ namespace Shop.Data.Models
     {
         [Column("ID")]
         //Product table ID
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         
         //public int CategoryId { get; set; }
 
         [Column("Name")]
         [Required(ErrorMessage ="Category Name Must be Spacified")]
-        public string CategoryName { get; set; }
+        public virtual string Name { get; set; }
 
         [Column("Description")]
-        public string CategoryDescription { get; set; }
+        public virtual string Description { get; set; }
 
         [Column("ImageUrl")]
-        public string CategoryImageUrl { get; set; }
+        public virtual string ImageUrl { get; set; }
 
         [NotMapped]
-        public HttpPostedFileBase File { get; set; }
+        public virtual HttpPostedFileBase File { get; set; }
 
         //This will return the list of products
         public virtual ICollection<Product> Products { get; set; }

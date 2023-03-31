@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Shop.Data" namespace="Shop.Data.Models">
+	<class name="Shop.Data.Models.Category" table="Category" >
+		<id name="Id" column="Id" >
+			<generator class="native" />
+		</id>
+		<property name="Name" />
+		<property name="Description" />
+		<property name="ImageUrl" />
+	</class>
+</hibernate-mapping>

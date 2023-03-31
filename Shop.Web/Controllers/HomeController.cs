@@ -1,4 +1,5 @@
-﻿using Shop.Data.Models;
+﻿using NHibernate.Cfg;
+using Shop.Data.Models;
 using Shop.Data.Services;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,20 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ProductRepository _productRepository;
 
         public HomeController()
         {
-            _context = new ApplicationDbContext();
+
+            var sessionFactory = new Configuration().Configure().BuildSessionFactory();
+            var session = sessionFactory.OpenSession();
+            _productRepository = new ProductRepository(session);
+
         }
         // GET: Home
         public ActionResult Index()
         {
-            ProductRepository productRepository = new ProductRepository(_context);
-            var model = productRepository.GetAll();
+            var model = _productRepository.GetAll();
             return View(model);
         }
 

@@ -1,4 +1,5 @@
-﻿using Shop.Data.Models;
+﻿using NHibernate.Cfg;
+using Shop.Data.Models;
 using Shop.Data.Repository;
 using Shop.Data.Services;
 using System;
@@ -12,17 +13,17 @@ namespace Shop.Web.Areas.Admin.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UserRepository _userRepository;
 
         public AccountController()
         {
-            _context = new ApplicationDbContext();
+
+            var sessionFactory = new Configuration().Configure().BuildSessionFactory();
+            var session = sessionFactory.OpenSession();
+            _userRepository = new UserRepository(session);
+
         }
 
-                    /*This is a connection for Ado.Net*/
-        //private readonly UserRepository db = new UserRepository();
-
-        // GET: Admin/Home
         public ActionResult Login()
         {
             return View();
@@ -31,12 +32,10 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            UserRepository userRepository = new UserRepository(_context);
             if (ModelState.IsValid)
             {
-                if(userRepository.Signin(user.Email,user.Password))
+                if(_userRepository.Signin(user.Email,user.Password))
                 {
-                    //Session["Email"]= user.Email;
                     FormsAuthentication.SetAuthCookie(user.Email, false);
                     return RedirectToAction("Menu");
                 }
@@ -61,10 +60,9 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Signup(User user)
         {
-            UserRepository userRepository = new UserRepository(_context);
             if (ModelState.IsValid)
             {
-                userRepository.Signup(user);
+                _userRepository.Signup(user);
                 return RedirectToAction("Login");
             }
             return RedirectToAction("signup");

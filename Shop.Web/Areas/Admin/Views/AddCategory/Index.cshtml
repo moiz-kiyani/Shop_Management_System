@@ -344,13 +344,13 @@
                             <tr>
                                <td>
                                    <a class="nav-link active" aria-current="page" href="~/Admin/AddCategory/GoToProducts/@item.Id" />
-                                   @Html.DisplayFor(modelItem => item.CategoryName)
+                                   @Html.DisplayFor(modelItem => item.Name)
                                </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.CategoryDescription)
+                                    @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
-                                    <img src="@Url.Content(item.CategoryImageUrl)" width="80" height="50" />
+                                    <img src="@Url.Content(item.ImageUrl)" width="80" height="50" />
                                 </td>
                                 <td>
                                     <a @Html.ActionLink("Edit", "Edit", new { id = item.Id })
